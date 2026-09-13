@@ -1394,3 +1394,149 @@
             </div>
           );
         }
+
+ /* DEVELOPER LECTURES */
+        if (screen === "devlectures") {
+          if (!subScreen) return (
+            <div style={{ padding:20 }}>
+              <BackBtn t={t} onClick={() => go("home")} />
+              <SectionTitle t={t} icon="grad" label="Developer Lectures" />
+              <OptionBtn t={t} iconType="code" iconColor="#00f5ff" label="Coding Verse" onClick={() => setSubScreen("codingverse")} />
+              <OptionBtn t={t} iconType="tech" iconColor="#ffe600" label="Technical Era" onClick={() => setSubScreen("techera")} />
+            </div>
+          );
+          const items = subScreen==="codingverse" ? codingVerse : technicalEra;
+          const title = subScreen==="codingverse" ? "Coding Verse" : "Technical Era";
+          const col = subScreen==="codingverse" ? "#00f5ff" : "#ffe600";
+          return (
+            <div style={{ padding:20 }}>
+              <BackBtn t={t} onClick={() => setSubScreen(null)} />
+              <SectionTitle t={t} icon={subScreen==="codingverse"?"code":"tech"} label={title} />
+              {items.map((item,i) => (
+                <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", background:t.card, border:`1px solid ${t.border}`, color:col, borderRadius:12, padding:"13px 16px", textDecoration:"none", fontWeight:600, fontSize:15, marginBottom:10, boxShadow:`0 0 8px ${t.glow}`, textShadow:`0 0 8px ${col}88` }}>
+                  <span>{item.name}</span><NeonIcon type="arrow" color={col} size={16}/>
+                </a>
+              ))}
+            </div>
+          );
+        }
+
+        /* CODING OPTIONS */
+        if (screen === "coding") {
+          if (!subScreen) return (
+            <div style={{ padding:20 }}>
+              <BackBtn t={t} onClick={() => go("home")} />
+              <SectionTitle t={t} icon="code" label="Coding Options" />
+              <OptionBtn t={t} iconType="code" iconColor={t.primary} label="Generalise Coding" onClick={() => setSubScreen("general")} />
+              <OptionBtn t={t} iconType="web" iconColor="#00f5ff" label="Frontend Developer" onClick={() => setSubScreen("frontend")} />
+              <OptionBtn t={t} iconType="lock" iconColor="#555" label="Backend (4th Sem)" disabled />
+              <OptionBtn t={t} iconType="lock" iconColor="#555" label="Database (5th Sem)" disabled />
+            </div>
+          );
+          const items = subScreen==="general" ? generalCoding : frontendDev;
+          const title = subScreen==="general" ? "Generalise Coding" : "Frontend Developer";
+          return (
+            <div style={{ padding:20 }}>
+              <BackBtn t={t} onClick={() => setSubScreen(null)} />
+              <SectionTitle t={t} icon="code" label={title} />
+              {items.map((item,i) => (
+                <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", background:t.card, border:`1px solid ${t.border}`, color:t.primary, borderRadius:12, padding:"13px 16px", textDecoration:"none", fontWeight:600, fontSize:15, marginBottom:10, boxShadow:`0 0 8px ${t.glow}` }}>
+                  <span>{item.name}</span><NeonIcon type="arrow" color={t.primary} size={16}/>
+                </a>
+              ))}
+            </div>
+          );
+        }
+
+        /* HOME */
+        return (
+          <div style={{ padding:"20px 14px" }}>
+            <div style={{ marginBottom:26 }}>
+              <div style={{ color:t.sub, fontSize:15 }}>Welcome,</div>
+              <div style={{ fontSize:34, fontWeight:900, color:t.primary, letterSpacing:-1, textShadow:`0 0 20px ${t.primary}88` }}>{profile.isStudent && stuName ? stuName.toUpperCase() : profile.greeting}</div>
+              <div style={{ color:t.sub, fontSize:13, marginTop:4 }}>Let's learn, grow and achieve together! ✦</div>
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(220px, 1fr))", gap:16, marginBottom:13 }}>
+              <HomeCard t={t} iconType="book"     iconColor={t.primary}   title="Subjects"        desc="Explore study subjects"   onClick={() => go("subjects")} />
+              <HomeCard t={t} iconType="notes"    iconColor={t.secondary} title="Notes"            desc="Access your study notes"  onClick={() => go("notes")} />
+              <HomeCard t={t} iconType="grad"     iconColor="#00f5ff"     title="Dev Lectures"     desc="Learn dev skills"         onClick={() => go("devlectures")} />
+              <HomeCard t={t} iconType="code"     iconColor="#ffe600"     title="CodingVerse"      desc="Master coding skills"     onClick={() => window.open("https://nehaprince3741.github.io/Coding/", "_blank")} />
+              <HomeCard t={t} iconType="syllabus" iconColor="#bf00ff"     title="2nd Yr Syllabus"  desc="View full syllabus PDF"   onClick={() => go("syllabus")} />
+              <HomeCard t={t} iconType="hv"       iconColor="#39ff14"     title="Love Diary"       desc="Write your day memories"  onClick={() => go("lovediary")} />
+              <HomeCard t={t} iconType="star"     iconColor="#ffe600"     title="PYQs"             desc="Previous year questions"  onClick={() => window.open("https://nehaprince3741.github.io/Pyqs/", "_blank")} />
+              {!profile.noConnect && (
+                <HomeCard t={t} iconType="bell"     iconColor="#39ff14"     title="Connect 💬"       desc="Chat, Call & Video"       onClick={() => go("connect")} />
+              )}
+            </div>
+            <div style={{ background:t.card, border:`1px solid ${t.border}`, borderRadius:14, padding:"13px 16px", display:"flex", alignItems:"center", justifyContent:"space-between", boxShadow:`0 0 10px ${t.glow}` }}>
+              <span style={{ color:t.sub, fontSize:13 }}>✦ Small steps every day lead to big results.</span>
+              <NeonIcon type="hv" color={t.primary} size={18}/>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div style={{ width:"100%", margin:"0 auto", minHeight:"100vh", fontFamily:"'Segoe UI', sans-serif", position:"relative", background:t.bg, color:t.text }}>
+          <GlowBg t={t} />
+
+          {/* MENU DRAWER */}
+          {menuOpen && (
+            <div style={{ position:"fixed", inset:0, zIndex:100, display:"flex" }}>
+              <div onClick={() => setMenuOpen(false)} style={{ flex:1, background:"#00000085" }} />
+              <div style={{ width:280, background:t.card, borderLeft:`1px solid ${t.border}`, padding:28, display:"flex", flexDirection:"column" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:6 }}>
+                  <NeonIcon type="user" color={t.primary} size={22}/>
+                  <span style={{ fontSize:20, fontWeight:800, color:t.primary, textShadow:`0 0 10px ${t.primary}` }}>About You</span>
+                </div>
+                <div style={{ color:t.sub, fontSize:13, marginBottom:22, letterSpacing:0.5 }}>Personal Section</div>
+                {profile.menuMsg && (
+                  <div style={{ background:`${t.primary}12`, border:`1px solid ${t.primary}40`, borderRadius:16, padding:22, textAlign:"center", boxShadow:`0 0 18px ${t.primary}20` }}>
+                    <NeonIcon type="hv" color={t.primary} size={40}/>
+                    <div style={{ fontSize:21, fontWeight:800, color:t.primary, lineHeight:1.4, marginTop:12, textShadow:`0 0 14px ${t.primary}` }}>{profile.menuMsg}</div>
+                  </div>
+                )}
+                <div style={{ marginTop:"auto" }}>
+                  <button onClick={() => setMenuOpen(false)} style={{ width:"100%", background:"none", border:`1px solid ${t.border}`, color:t.sub, borderRadius:12, padding:11, cursor:"pointer", fontWeight:600 }}>Close</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* HEADER */}
+          <div style={{ position:"sticky", top:0, zIndex:50, background:`${t.bg}ee`, backdropFilter:"blur(14px)", padding:"11px 18px", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:`1px solid ${t.border}` }}>
+            {profile.showMenu
+              ? <button onClick={() => setMenuOpen(true)} style={{ background:"none", border:"none", cursor:"pointer", padding:2 }}><NeonIcon type="menu" color={t.primary} size={24}/></button>
+              : <div style={{ width:28 }} />}
+            <div style={{ fontWeight:900, fontSize:17, color:t.primary, letterSpacing:2, textShadow:`0 0 12px ${t.primary}88` }}>StudyHub</div>
+            <button style={{ background:"none", border:"none", cursor:"pointer", padding:2 }}><NeonIcon type="bell" color={t.primary} size={22}/></button>
+          </div>
+
+          {/* CONTENT */}
+          <div style={{ position:"relative", zIndex:1, paddingBottom:84, paddingLeft:"clamp(0px, 4vw, 100px)", paddingRight:"clamp(0px, 4vw, 100px)" }}>
+            {renderContent()}
+          </div>
+
+          {/* BOTTOM NAV */}
+          <div style={{ position:"fixed", bottom:0, left:0, width:"100%", background:`${t.bg}f2`, backdropFilter:"blur(14px)", borderTop:`1px solid ${t.border}`, display:"flex", justifyContent:"center", gap:"clamp(24px, 5vw, 80px)", alignItems:"center", padding:"8px 0 14px", zIndex:50 }}>
+            {navItems.map(nav => {
+              const active = screen === nav.s;
+              return (
+                <button key={nav.s} onClick={() => go(nav.s)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:3, padding:"2px 10px" }}>
+                  <div style={{ filter: active ? `drop-shadow(0 0 8px ${t.primary})` : "none", transition:"filter 0.2s" }}>
+                    <NeonIcon type={nav.icon} color={active ? t.primary : "#666688"} size={24}/>
+                  </div>
+                  <span style={{ fontSize:11, fontWeight: active ? 700 : 400, color: active ? t.primary : "#666688", textShadow: active ? `0 0 6px ${t.primary}` : "none" }}>{nav.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
