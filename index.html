@@ -29,11 +29,10 @@
     const GREEN = { primary:"#00ff66", secondary:"#7dffb3", bg:"#000000", card:"#00120a", border:"#00ff6638", glow:"#00ff6620", text:"#fff", sub:"#7dffb3bb" };
 
     const profiles = {
-      neha:    { theme:ORANGE,  name:"Admin",    fullName:"ADMIN",  college:"BTECH FROM REC Mainpuri", roll:"2508400130037", father:"Kamlesh Kumar",  mother:"Sunita Milton", greeting:"NEHA ♡",    menuMsg:"I Love You Neha 💕", showMenu:true,  isStudent:false, noConnect:false },
-      prince:  { theme:BLUE,  name:"Krish",  fullName:"Krish",  college:"Btech - REC Mainpuri",    roll:"2508400130041", father:"Rastradeep",      mother:"Reeta Rana",    greeting:"PRINCE ✦",  menuMsg:null,                 showMenu:false, isStudent:false, noConnect:false },
+      neha:    { theme:PINK,  name:"Neha",    fullName:"Neha Milton",  college:"BTECH FROM REC Mainpuri", roll:"2508400130037", father:"Kamlesh Kumar",  mother:"Sunita Milton", greeting:"NEHA ♡",    menuMsg:"I Love You Neha 💕", showMenu:true,  isStudent:false, noConnect:false },
+      prince:  { theme:BLUE,  name:"Prince",  fullName:"Prince Rana",  college:"Btech - REC Mainpuri",    roll:"2508400130041", father:"Rastradeep",      mother:"Reeta Rana",    greeting:"PRINCE ✦",  menuMsg:null,                 showMenu:false, isStudent:false, noConnect:false },
       student: { theme:GREEN, name:"Student", fullName:"Student",      college:"",                         roll:"",               father:"",                 mother:"",              greeting:"STUDENT ✦", menuMsg:null,                 showMenu:true,  isStudent:true,  noConnect:true  },
     };
-
 
     /* ─── NEON SVG ICONS ─── */
     function NeonIcon({ type, color, size = 28 }) {
@@ -149,6 +148,8 @@
     const generalCoding = [{name:"C Coding",url:"https://youtu.be/aZb0iu4uGwA?si=vDetvZoBdwHVRWaG"},{name:"Python",url:"https://youtu.be/UrsmFxEIp5k?si=MfiyYmB_FCm661Ji"}];
     const frontendDev   = [{name:"HTML",url:"https://youtu.be/zysUIv0-xak?si=hQoVM9ovnDOvRsg3"},{name:"CSS",url:"https://youtu.be/ESnrn1kAD4E?si=ZP0Re1XR9FrtiCYZ"},{name:"Javascript",url:"https://youtu.be/VlPiVmYuoqw?si=hOjomOU-ReQR32Ch"}];
 
+     
+        
     /* ─── REUSABLE COMPONENTS ─── */
     function GlowBg({ t }) {
       return (
@@ -296,7 +297,8 @@
             })}
           </div>
 
-          {/* Day label */}
+
+{/* Day label */}
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
             <span style={{ fontSize:15, fontWeight:700, color: activeDay===6?"#00f5ff":t.primary, textShadow:`0 0 8px ${activeDay===6?"#00f5ff":t.primary}`, letterSpacing:1 }}>
               {WEEK_FULL[activeDay].toUpperCase()}{activeDay===todayIdx?" · TODAY":""}
@@ -449,7 +451,7 @@
         );
       }
 
-      // Write new entry
+// Write new entry
       if (writing) {
         return (
           <div style={{ padding:"20px 16px" }}>
@@ -594,7 +596,6 @@
         </div>
       );
     }
-
 
     /* ─── ICONS for chat/call ─── */
     function PhoneIcon({color,size=24}){return(<svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{filter:`drop-shadow(0 0 6px ${color})`}}><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" stroke={color} strokeWidth="1.8" strokeLinejoin="round"/></svg>);}
@@ -796,6 +797,7 @@
         setInput("");
         setMediaFile(null);
       }
+
 
       /* ─── FILE SEND ─── */
       const galleryRef = useRef(null);
@@ -1112,7 +1114,7 @@
                 <div ref={msgEndRef}/>
               </div>
 
-              {/* Input bar */}
+{/* Input bar */}
               <div style={{ padding:"8px 10px 18px", borderTop:`1px solid ${t.border}`, background:`${t.bg}f0`, flexShrink:0 }}>
                 {/* Attachment row */}
                 <div style={{ display:"flex", gap:8, marginBottom:8 }}>
@@ -1148,15 +1150,10 @@
       );
     }
 
-    /* ─── PINS ─── */
-    const PINS = { neha:"0734", prince:"0734", student:"" };
-
     /* ─── MAIN APP ─── */
     function App() {
-      const [user, setUser] = useState(null);
-      const [pinTarget, setPinTarget] = useState(null);
-      const [pinInput, setPinInput] = useState("");
-      const [pinError, setPinError] = useState(false);
+      // Hardcode the user state to bypass the login phase.
+      const [user] = useState("student");
       const [screen, setScreen] = useState("home");
       const [subScreen, setSubScreen] = useState(null);
       const [expandedSubject, setExpandedSubject] = useState(null);
@@ -1172,122 +1169,10 @@
         if (field === "section") { setStuSection(val); localStorage.setItem("sh_stu_section", val); }
       }
 
-      const t = user ? profiles[user].theme : PINK;
-      const profile = user ? profiles[user] : null;
+      const t = profiles[user].theme;
+      const profile = profiles[user];
 
       function go(s, sub = null) { setScreen(s); setSubScreen(sub); setExpandedSubject(null); setCyberSub(null); }
-
-      function handlePinDigit(d) {
-        const next = (pinInput + d).slice(0,4);
-        setPinInput(next);
-        setPinError(false);
-        if (next.length === 4) {
-          if (next === PINS[pinTarget]) {
-            setUser(pinTarget);
-            setPinTarget(null);
-            setPinInput("");
-          } else {
-            setPinError(true);
-            setTimeout(() => { setPinInput(""); setPinError(false); }, 700);
-          }
-        }
-      }
-
-      /* ─── PIN MODAL ─── */
-      if (pinTarget) {
-        const pinColor = pinTarget === "neha" ? "#ff2d78" : pinTarget === "prince" ? "#2d8fff" : "#00ff66";
-        const pinName  = pinTarget === "neha" ? "Neha" : pinTarget === "prince" ? "Prince" : "Student";
-        return (
-          <div style={{ minHeight:"100vh", background:"#04000c", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", fontFamily:"'Segoe UI', sans-serif", padding:24 }}>
-            <div style={{ width:"100%", maxWidth:320, textAlign:"center" }}>
-              <div style={{ marginBottom:8 }}><NeonIcon type="lock" color={pinColor} size={44}/></div>
-              <div style={{ fontSize:22, fontWeight:800, color:pinColor, textShadow:`0 0 14px ${pinColor}`, marginBottom:4 }}>Enter PIN</div>
-              <div style={{ color:"#666", fontSize:13, marginBottom:28 }}>Login as {pinName}</div>
-
-              {/* Dots */}
-              <div style={{ display:"flex", justifyContent:"center", gap:16, marginBottom:32 }}>
-                {[0,1,2,3].map(i => (
-                  <div key={i} style={{
-                    width:18, height:18, borderRadius:"50%",
-                    background: i < pinInput.length ? pinColor : "transparent",
-                    border:`2px solid ${pinError ? "#ff4444" : pinColor}`,
-                    boxShadow: i < pinInput.length ? `0 0 12px ${pinColor}` : "none",
-                    transition:"all 0.15s",
-                    transform: pinError ? "scale(1.2)" : "scale(1)"
-                  }}/>
-                ))}
-              </div>
-              {pinError && <div style={{ color:"#ff4444", fontSize:13, marginBottom:16, fontWeight:600 }}>❌ Wrong PIN</div>}
-
-              {/* Numpad */}
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:14 }}>
-                {["1","2","3","4","5","6","7","8","9"].map(d => (
-                  <button key={d} onClick={() => handlePinDigit(d)} style={{
-                    background:"#ffffff08", border:`1px solid ${pinColor}33`, color:"#fff",
-                    borderRadius:14, padding:"18px 0", fontSize:22, fontWeight:700,
-                    cursor:"pointer", boxShadow:`0 0 8px ${pinColor}18`,
-                    transition:"all 0.12s", fontFamily:"'Segoe UI', sans-serif"
-                  }}>{d}</button>
-                ))}
-                <div/>
-                <button onClick={() => handlePinDigit("0")} style={{
-                  background:"#ffffff08", border:`1px solid ${pinColor}33`, color:"#fff",
-                  borderRadius:14, padding:"18px 0", fontSize:22, fontWeight:700,
-                  cursor:"pointer", boxShadow:`0 0 8px ${pinColor}18`, fontFamily:"'Segoe UI', sans-serif"
-                }}>0</button>
-                <button onClick={() => { setPinInput(p => p.slice(0,-1)); setPinError(false); }} style={{
-                  background:"#ffffff05", border:`1px solid #ffffff15`, color:"#aaa",
-                  borderRadius:14, padding:"18px 0", fontSize:18, fontWeight:700,
-                  cursor:"pointer", fontFamily:"'Segoe UI', sans-serif"
-                }}>⌫</button>
-              </div>
-
-              <button onClick={() => { setPinTarget(null); setPinInput(""); setPinError(false); }} style={{ background:"none", border:"none", color:"#555", fontSize:13, cursor:"pointer", marginTop:4 }}>← Back to profiles</button>
-            </div>
-          </div>
-        );
-      }
-
-      if (!user) {
-        return (
-          <div style={{ minHeight:"100vh", background:"#04000c", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", fontFamily:"'Segoe UI', sans-serif", padding:24, position:"relative", overflow:"hidden" }}>
-            <div style={{ position:"absolute", inset:0, overflow:"hidden", pointerEvents:"none" }}>
-              <div style={{ position:"absolute", top:"-18%", left:"-8%", width:"32vw", maxWidth:420, height:"32vw", maxHeight:420, borderRadius:"50%", background:"radial-gradient(circle,#ff2d7816 0%,transparent 70%)" }} />
-              <div style={{ position:"absolute", top:"-20%", right:"-8%", width:"30vw", maxWidth:400, height:"30vw", maxHeight:400, borderRadius:"50%", background:"radial-gradient(circle,#2d8fff14 0%,transparent 70%)" }} />
-              <div style={{ position:"absolute", bottom:"-16%", left:"8%", width:"28vw", maxWidth:380, height:"28vw", maxHeight:380, borderRadius:"50%", background:"radial-gradient(circle,#00ff6612 0%,transparent 70%)" }} />
-              <div style={{ position:"absolute", bottom:"-12%", right:"12%", width:"26vw", maxWidth:350, height:"26vw", maxHeight:350, borderRadius:"50%", background:"radial-gradient(circle,#ff2d7812 0%,transparent 70%)" }} />
-              <div style={{ position:"absolute", top:"30%", left:"42%", width:"22vw", maxWidth:300, height:"22vw", maxHeight:300, borderRadius:"50%", background:"radial-gradient(circle,#2d8fff10 0%,transparent 70%)" }} />
-              <svg style={{ position:"absolute", inset:0, width:"100%", height:"100%", opacity:0.22 }} viewBox="0 0 1600 900" preserveAspectRatio="none">
-                <path d="M-50 150 Q300 40 620 230 T1220 190 T1650 340" stroke="#ff2d78" strokeWidth="1.4" fill="none"/>
-                <path d="M-50 450 Q260 340 560 490 T1120 440 T1650 600" stroke="#2d8fff" strokeWidth="1.1" fill="none"/>
-                <path d="M-50 700 Q310 610 710 750 T1320 700 T1650 810" stroke="#00ff66" strokeWidth="1" fill="none"/>
-                <circle cx="120" cy="110" r="3" fill="#ff2d78" opacity="0.6"/>
-                <circle cx="800" cy="70" r="2.5" fill="#2d8fff" opacity="0.6"/>
-                <circle cx="1420" cy="190" r="2.5" fill="#00ff66" opacity="0.5"/>
-                <circle cx="280" cy="590" r="2.5" fill="#ff2d78" opacity="0.4"/>
-                <circle cx="1080" cy="680" r="2.5" fill="#2d8fff" opacity="0.5"/>
-                <circle cx="1540" cy="480" r="2.5" fill="#00ff66" opacity="0.5"/>
-              </svg>
-            </div>
-            <div style={{ position:"relative", zIndex:1, width:"100%", maxWidth:380 }}>
-              <div style={{ textAlign:"center", marginBottom:40 }}>
-                <NeonIcon type="book" color="#ff2d78" size={52} />
-                <div style={{ fontSize:30, fontWeight:900, marginTop:12, background:"linear-gradient(135deg,#ff2d78,#2d8fff)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>StudyHub</div>
-                <div style={{ color:"#666", marginTop:4, fontSize:13, letterSpacing:2, textTransform:"uppercase" }}>Choose Your Profile</div>
-              </div>
-              <button onClick={() => setPinTarget("neha")} style={{ width:"100%", background:"linear-gradient(135deg,#ff2d7818,#07000d)", border:"1.5px solid #ff2d78", color:"#fff", borderRadius:16, padding:"18px 24px", cursor:"pointer", fontSize:17, fontWeight:700, boxShadow:"0 0 22px #ff2d7830", marginBottom:14, display:"flex", alignItems:"center", justifyContent:"center", gap:12 }}>
-                <NeonIcon type="user" color="#ff2d78" size={22}/> Login with Neha
-              </button>
-              <button onClick={() => setPinTarget("prince")} style={{ width:"100%", background:"linear-gradient(135deg,#2d8fff18,#00070d)", border:"1.5px solid #2d8fff", color:"#fff", borderRadius:16, padding:"18px 24px", cursor:"pointer", fontSize:17, fontWeight:700, boxShadow:"0 0 22px #2d8fff30", marginBottom:14, display:"flex", alignItems:"center", justifyContent:"center", gap:12 }}>
-                <NeonIcon type="user" color="#2d8fff" size={22}/> Login with Prince
-              </button>
-              <button onClick={() => setPinTarget("student")} style={{ width:"100%", background:"linear-gradient(135deg,#00ff6618,#000000)", border:"1.5px solid #00ff66", color:"#fff", borderRadius:16, padding:"18px 24px", cursor:"pointer", fontSize:17, fontWeight:700, boxShadow:"0 0 22px #00ff6630", display:"flex", alignItems:"center", justifyContent:"center", gap:12 }}>
-                <NeonIcon type="user" color="#00ff66" size={22}/> Login with Student
-              </button>
-            </div>
-          </div>
-        );
-      }
 
       const navItems = [
         { icon:"home",   label:"Home",         s:"home"         },
@@ -1323,7 +1208,6 @@
                     />
                   </div>
                 ))}
-                <button onClick={() => setUser(null)} style={{ width:"100%", background:"none", border:`1px solid ${t.primary}`, color:t.primary, borderRadius:12, padding:12, cursor:"pointer", marginTop:8, fontWeight:600, boxShadow:`0 0 8px ${t.glow}` }}>Logout</button>
               </div>
             );
           }
@@ -1341,7 +1225,6 @@
                   <div style={{ color:t.text, fontWeight:600 }}>{val}</div>
                 </div>
               ))}
-              <button onClick={() => setUser(null)} style={{ width:"100%", background:"none", border:`1px solid ${t.primary}`, color:t.primary, borderRadius:12, padding:12, cursor:"pointer", marginTop:8, fontWeight:600, boxShadow:`0 0 8px ${t.glow}` }}>Logout</button>
             </div>
           );
         }
@@ -1511,149 +1394,3 @@
             </div>
           );
         }
-
-        /* DEVELOPER LECTURES */
-        if (screen === "devlectures") {
-          if (!subScreen) return (
-            <div style={{ padding:20 }}>
-              <BackBtn t={t} onClick={() => go("home")} />
-              <SectionTitle t={t} icon="grad" label="Developer Lectures" />
-              <OptionBtn t={t} iconType="code" iconColor="#00f5ff" label="Coding Verse" onClick={() => setSubScreen("codingverse")} />
-              <OptionBtn t={t} iconType="tech" iconColor="#ffe600" label="Technical Era" onClick={() => setSubScreen("techera")} />
-            </div>
-          );
-          const items = subScreen==="codingverse" ? codingVerse : technicalEra;
-          const title = subScreen==="codingverse" ? "Coding Verse" : "Technical Era";
-          const col = subScreen==="codingverse" ? "#00f5ff" : "#ffe600";
-          return (
-            <div style={{ padding:20 }}>
-              <BackBtn t={t} onClick={() => setSubScreen(null)} />
-              <SectionTitle t={t} icon={subScreen==="codingverse"?"code":"tech"} label={title} />
-              {items.map((item,i) => (
-                <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", background:t.card, border:`1px solid ${t.border}`, color:col, borderRadius:12, padding:"13px 16px", textDecoration:"none", fontWeight:600, fontSize:15, marginBottom:10, boxShadow:`0 0 8px ${t.glow}`, textShadow:`0 0 8px ${col}88` }}>
-                  <span>{item.name}</span><NeonIcon type="arrow" color={col} size={16}/>
-                </a>
-              ))}
-            </div>
-          );
-        }
-
-        /* CODING OPTIONS */
-        if (screen === "coding") {
-          if (!subScreen) return (
-            <div style={{ padding:20 }}>
-              <BackBtn t={t} onClick={() => go("home")} />
-              <SectionTitle t={t} icon="code" label="Coding Options" />
-              <OptionBtn t={t} iconType="code" iconColor={t.primary} label="Generalise Coding" onClick={() => setSubScreen("general")} />
-              <OptionBtn t={t} iconType="web" iconColor="#00f5ff" label="Frontend Developer" onClick={() => setSubScreen("frontend")} />
-              <OptionBtn t={t} iconType="lock" iconColor="#555" label="Backend (4th Sem)" disabled />
-              <OptionBtn t={t} iconType="lock" iconColor="#555" label="Database (5th Sem)" disabled />
-            </div>
-          );
-          const items = subScreen==="general" ? generalCoding : frontendDev;
-          const title = subScreen==="general" ? "Generalise Coding" : "Frontend Developer";
-          return (
-            <div style={{ padding:20 }}>
-              <BackBtn t={t} onClick={() => setSubScreen(null)} />
-              <SectionTitle t={t} icon="code" label={title} />
-              {items.map((item,i) => (
-                <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", background:t.card, border:`1px solid ${t.border}`, color:t.primary, borderRadius:12, padding:"13px 16px", textDecoration:"none", fontWeight:600, fontSize:15, marginBottom:10, boxShadow:`0 0 8px ${t.glow}` }}>
-                  <span>{item.name}</span><NeonIcon type="arrow" color={t.primary} size={16}/>
-                </a>
-              ))}
-            </div>
-          );
-        }
-
-        /* HOME */
-        return (
-          <div style={{ padding:"20px 14px" }}>
-            <div style={{ marginBottom:26 }}>
-              <div style={{ color:t.sub, fontSize:15 }}>Welcome,</div>
-              <div style={{ fontSize:34, fontWeight:900, color:t.primary, letterSpacing:-1, textShadow:`0 0 20px ${t.primary}88` }}>{profile.isStudent && stuName ? stuName.toUpperCase() : profile.greeting}</div>
-              <div style={{ color:t.sub, fontSize:13, marginTop:4 }}>Let's learn, grow and achieve together! ✦</div>
-            </div>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(220px, 1fr))", gap:16, marginBottom:13 }}>
-              <HomeCard t={t} iconType="book"     iconColor={t.primary}   title="Subjects"        desc="Explore study subjects"   onClick={() => go("subjects")} />
-              <HomeCard t={t} iconType="notes"    iconColor={t.secondary} title="Notes"            desc="Access your study notes"  onClick={() => go("notes")} />
-              <HomeCard t={t} iconType="grad"     iconColor="#00f5ff"     title="Dev Lectures"     desc="Learn dev skills"         onClick={() => go("devlectures")} />
-              <HomeCard t={t} iconType="code"     iconColor="#ffe600"     title="CodingVerse"      desc="Master coding skills"     onClick={() => window.open("https://nehaprince3741.github.io/Coding/", "_blank")} />
-              <HomeCard t={t} iconType="syllabus" iconColor="#bf00ff"     title="2nd Yr Syllabus"  desc="View full syllabus PDF"   onClick={() => go("syllabus")} />
-              <HomeCard t={t} iconType="hv"       iconColor="#39ff14"     title="Love Diary"       desc="Write your day memories"  onClick={() => go("lovediary")} />
-              <HomeCard t={t} iconType="star"     iconColor="#ffe600"     title="PYQs"             desc="Previous year questions"  onClick={() => window.open("https://nehaprince3741.github.io/Pyqs/", "_blank")} />
-              {!profile.noConnect && (
-                <HomeCard t={t} iconType="bell"     iconColor="#39ff14"     title="Connect 💬"       desc="Chat, Call & Video"       onClick={() => go("connect")} />
-              )}
-            </div>
-            <div style={{ background:t.card, border:`1px solid ${t.border}`, borderRadius:14, padding:"13px 16px", display:"flex", alignItems:"center", justifyContent:"space-between", boxShadow:`0 0 10px ${t.glow}` }}>
-              <span style={{ color:t.sub, fontSize:13 }}>✦ Small steps every day lead to big results.</span>
-              <NeonIcon type="hv" color={t.primary} size={18}/>
-            </div>
-          </div>
-        );
-      }
-
-      return (
-        <div style={{ width:"100%", margin:"0 auto", minHeight:"100vh", fontFamily:"'Segoe UI', sans-serif", position:"relative", background:t.bg, color:t.text }}>
-          <GlowBg t={t} />
-
-          {/* MENU DRAWER */}
-          {menuOpen && (
-            <div style={{ position:"fixed", inset:0, zIndex:100, display:"flex" }}>
-              <div onClick={() => setMenuOpen(false)} style={{ flex:1, background:"#00000085" }} />
-              <div style={{ width:280, background:t.card, borderLeft:`1px solid ${t.border}`, padding:28, display:"flex", flexDirection:"column" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:6 }}>
-                  <NeonIcon type="user" color={t.primary} size={22}/>
-                  <span style={{ fontSize:20, fontWeight:800, color:t.primary, textShadow:`0 0 10px ${t.primary}` }}>About You</span>
-                </div>
-                <div style={{ color:t.sub, fontSize:13, marginBottom:22, letterSpacing:0.5 }}>Personal Section</div>
-                {profile.menuMsg && (
-                  <div style={{ background:`${t.primary}12`, border:`1px solid ${t.primary}40`, borderRadius:16, padding:22, textAlign:"center", boxShadow:`0 0 18px ${t.primary}20` }}>
-                    <NeonIcon type="hv" color={t.primary} size={40}/>
-                    <div style={{ fontSize:21, fontWeight:800, color:t.primary, lineHeight:1.4, marginTop:12, textShadow:`0 0 14px ${t.primary}` }}>{profile.menuMsg}</div>
-                  </div>
-                )}
-                <div style={{ marginTop:"auto" }}>
-                  <button onClick={() => setMenuOpen(false)} style={{ width:"100%", background:"none", border:`1px solid ${t.border}`, color:t.sub, borderRadius:12, padding:11, cursor:"pointer", fontWeight:600 }}>Close</button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* HEADER */}
-          <div style={{ position:"sticky", top:0, zIndex:50, background:`${t.bg}ee`, backdropFilter:"blur(14px)", padding:"11px 18px", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:`1px solid ${t.border}` }}>
-            {profile.showMenu
-              ? <button onClick={() => setMenuOpen(true)} style={{ background:"none", border:"none", cursor:"pointer", padding:2 }}><NeonIcon type="menu" color={t.primary} size={24}/></button>
-              : <div style={{ width:28 }} />}
-            <div style={{ fontWeight:900, fontSize:17, color:t.primary, letterSpacing:2, textShadow:`0 0 12px ${t.primary}88` }}>StudyHub</div>
-            <button style={{ background:"none", border:"none", cursor:"pointer", padding:2 }}><NeonIcon type="bell" color={t.primary} size={22}/></button>
-          </div>
-
-          {/* CONTENT */}
-          <div style={{ position:"relative", zIndex:1, paddingBottom:84, paddingLeft:"clamp(0px, 4vw, 100px)", paddingRight:"clamp(0px, 4vw, 100px)" }}>
-            {renderContent()}
-          </div>
-
-          {/* BOTTOM NAV */}
-          <div style={{ position:"fixed", bottom:0, left:0, width:"100%", background:`${t.bg}f2`, backdropFilter:"blur(14px)", borderTop:`1px solid ${t.border}`, display:"flex", justifyContent:"center", gap:"clamp(24px, 5vw, 80px)", alignItems:"center", padding:"8px 0 14px", zIndex:50 }}>
-            {navItems.map(nav => {
-              const active = screen === nav.s;
-              return (
-                <button key={nav.s} onClick={() => go(nav.s)} style={{ background:"none", border:"none", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:3, padding:"2px 10px" }}>
-                  <div style={{ filter: active ? `drop-shadow(0 0 8px ${t.primary})` : "none", transition:"filter 0.2s" }}>
-                    <NeonIcon type={nav.icon} color={active ? t.primary : "#666688"} size={24}/>
-                  </div>
-                  <span style={{ fontSize:11, fontWeight: active ? 700 : 400, color: active ? t.primary : "#666688", textShadow: active ? `0 0 6px ${t.primary}` : "none" }}>{nav.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      );
-    }
-
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
-  </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1f9d8b11badce62',t:'MTc4NDgwMDkxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
